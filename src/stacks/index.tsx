@@ -1,25 +1,41 @@
 import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import HomeScreen from '../screens/Home'
-import DetailsScreen from '../screens/Details'
+import Login from '../screens/Login'
+import Home from '../screens/Home'
+import Loading from '../Components/Loading'
+
+import { useAuth } from '../provider/auth.provider'
+import { LoginProvider } from '../provider/login.provider'
 
 const { Screen, Navigator } = createStackNavigator()
 
-export default function StackNavigation() {
+function LoginScreen() {
   return (
-    <NavigationContainer>
-      <Navigator headerMode='none'>
-        <Screen
+    <LoginProvider>
+      <Login />
+    </LoginProvider>
+  )
+}
+
+export default function StackNavigation() {
+  const { isLoggedIn, authLoading } = useAuth()
+
+  if (authLoading) {
+    return <Loading />
+  }
+
+  return (
+    <Navigator headerMode='none'>
+      {isLoggedIn
+        ? <Screen
           name="Home"
-          component={HomeScreen}
+          component={Home}
         />
-        <Screen
-          name="Details"
-          component={DetailsScreen}
-        />
-      </Navigator>
-    </NavigationContainer>
+        : <Screen
+          name="Login"
+          component={LoginScreen}
+        />}
+    </Navigator>
   )
 }

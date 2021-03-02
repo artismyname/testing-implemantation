@@ -1,30 +1,20 @@
-import React, { useState } from 'react'
-import { Button, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import React from 'react'
+import { SafeAreaView, Text } from 'react-native'
+
+import DefaultButton from '../../Components/DefaultButton'
+
+import { useAuth } from '../../provider/auth.provider'
+import { logout } from './action'
 
 import styles from './styles'
 
-export default function Home({ navigation }: any) {
-  const [items] = React.useState(
-    new Array(20).fill(null).map((_, idx) => idx + 1)
-  );
-
-  const onOpacityPress = (item: any) => navigation.navigate('Details', item);
+export default function Home() {
+  const { user, handleSetAuthLoading, loadAuthProvider } = useAuth()
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.header}>List of numbers from 1 to 20</Text>
-      <FlatList
-        keyExtractor={(_, idx) => `${idx}`}
-        data={items}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => onOpacityPress(item)}
-            style={styles.row}
-          >
-            <Text>Item number {item}</Text>
-          </TouchableOpacity>
-        )}
-      />
+      <Text style={styles.text}>Username: {user?.username}</Text>
+      <DefaultButton title='Logout' style={styles.button} action={() => logout(handleSetAuthLoading, loadAuthProvider)} />
     </SafeAreaView>
   )
 }
