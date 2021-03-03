@@ -14,20 +14,20 @@ import styles from './styles'
 export default function Login({ navigation }: any) {
   const [phone, setPhone] = useState<string>('')
   const { loadAuthProvider } = useAuth()
-  const { loginLoading, handleSetLoginLoading } = useLogin()
+  const { loginLoading, setLoginLoading } = useLogin()
 
   return (
     <>
       <SafeAreaView style={styles.container}>
-        <Text>Number</Text>
         <TextInput
           keyboardType='numeric'
           style={styles.inputNumber}
           value={phone}
+          placeholder={'Number'}
           onChangeText={text => setPhone(MaskService.toMask('cel-phone', text))}
         />
         <DefaultButton title='Submit' style={styles.button} action={() => {
-          login(phone, handleSetLoginLoading, loadAuthProvider)
+          login(phone, setLoginLoading, loadAuthProvider)
         }} />
       </SafeAreaView>
       {loginLoading && <Loading />}

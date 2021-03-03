@@ -5,8 +5,8 @@ interface IAuthContext {
   user: User
   isLoggedIn: boolean
   authLoading: boolean
-  handleSetIsLoggedIn: (v: boolean) => void
-  handleSetAuthLoading: (v: boolean) => void
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
+  setAuthLoading: React.Dispatch<React.SetStateAction<boolean>>
   loadAuthProvider: () => Promise<void>
 }
 
@@ -26,28 +26,21 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, [])
 
   const loadAuthProvider = async () => {
-    try {
-      let storedUser = await AsyncStorage.getItem('user')
+    let storedUser = await AsyncStorage.getItem('user')
 
-      if (storedUser) {
-        setUser(JSON.parse(storedUser))
-        setIsLoggedIn(true)
-        setAuthLoading(false)
-      } else {
-        setIsLoggedIn(false)
-        throw "User isn't logged"
-      }
-    } catch (err) {
-      console.log(err)
+    if (storedUser) {
+      setUser(JSON.parse(storedUser))
+      setIsLoggedIn(true)
       setAuthLoading(false)
+    } else {
+      setIsLoggedIn(false)
+      setAuthLoading(false)
+      console.log("User isn't logged")
     }
   }
 
-  const handleSetIsLoggedIn = (v: boolean) => setIsLoggedIn(v)
-  const handleSetAuthLoading = (v: boolean) => setAuthLoading(v)
-
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, authLoading, handleSetIsLoggedIn, handleSetAuthLoading, loadAuthProvider }}>
+    <AuthContext.Provider value={{ user, isLoggedIn, authLoading, setIsLoggedIn, setAuthLoading, loadAuthProvider }}>
       {children}
     </AuthContext.Provider>
   )

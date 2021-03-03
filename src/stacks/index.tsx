@@ -7,6 +7,7 @@ import Loading from '../Components/Loading'
 
 import { useAuth } from '../provider/auth.provider'
 import { LoginProvider } from '../provider/login.provider'
+import { NavigationContainer } from '@react-navigation/native'
 
 const { Screen, Navigator } = createStackNavigator()
 
@@ -26,16 +27,18 @@ export default function StackNavigation() {
   }
 
   return (
-    <Navigator headerMode='none'>
-      {isLoggedIn
-        ? <Screen
-          name="Home"
-          component={Home}
-        />
-        : <Screen
-          name="Login"
-          component={LoginScreen}
-        />}
-    </Navigator>
+    <NavigationContainer>
+      <Navigator headerMode='none'>
+        {isLoggedIn
+          ? <Screen
+            name="Home"
+            component={Home}
+          />
+          : <Screen
+            name="Login"
+            component={LoginScreen}
+          />}
+      </Navigator>
+    </NavigationContainer>
   )
 }

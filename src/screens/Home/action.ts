@@ -2,24 +2,24 @@ import { Alert } from "react-native"
 import AsyncStorage from "@react-native-community/async-storage"
 
 type Logout = (
-  handleSetAuthLoading: (v: boolean) => void,
+  handleSetAuthLoading: React.Dispatch<React.SetStateAction<boolean>>,
   loadAuthProvider: () => Promise<void>
 ) => Promise<void>
 
 const removeUser = async () => await AsyncStorage.removeItem('user')
 
-export const logout: Logout = async (handleSetAuthLoading, loadAuthProvider) => {
+export const logout: Logout = async (setAuthLoading, loadAuthProvider) => {
   try {
-    handleSetAuthLoading(true)
+    setAuthLoading(true)
 
     await removeUser()
     await loadAuthProvider()
 
-    handleSetAuthLoading(false)
+    setAuthLoading(false)
   } catch (error) {
     let message = 'An unexpected error has occurred'
 
     Alert.alert('Error', message)
-    handleSetAuthLoading(false)
+    setAuthLoading(false)
   }
 }

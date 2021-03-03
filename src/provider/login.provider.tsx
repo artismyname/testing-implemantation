@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from 'react'
 
 interface ILoginContext {
   loginLoading: boolean
-  handleSetLoginLoading: (v: boolean) => void
+  setLoginLoading:  React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const LoginContext = createContext<ILoginContext | null>(null)
@@ -10,10 +10,8 @@ const LoginContext = createContext<ILoginContext | null>(null)
 export const LoginProvider: React.FC = ({ children }) => {
   const [loginLoading, setLoginLoading] = useState<boolean>(false)
 
-  const handleSetLoginLoading = (v: boolean) => setLoginLoading(v)
-
   return (
-    <LoginContext.Provider value={{ loginLoading, handleSetLoginLoading }}>
+    <LoginContext.Provider value={{ loginLoading, setLoginLoading }}>
       {children}
     </LoginContext.Provider>
   )
