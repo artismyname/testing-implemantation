@@ -2,7 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import Login from '../screens/Login'
-import Home from '../screens/Home'
+import Main from '../screens/Main'
 import Loading from '../Components/Loading'
 
 import { useAuth } from '../provider/auth.provider'
@@ -27,18 +27,16 @@ export default function StackNavigation() {
   }
 
   return (
-    <NavigationContainer>
-      <Navigator headerMode='none'>
-        {isLoggedIn
-          ? <Screen
-            name="Home"
-            component={Home}
-          />
-          : <Screen
-            name="Login"
-            component={LoginScreen}
-          />}
-      </Navigator>
-    </NavigationContainer>
+    <Navigator headerMode='none'>
+      {isLoggedIn
+        ? <Screen
+          name="Home"
+          component={Main}
+        />
+        : <Screen
+          name="Login"
+          component={LoginScreen}
+        />}
+    </Navigator>
   )
 }

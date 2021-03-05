@@ -7,13 +7,13 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontSize: 16,
-    marginBottom: 10
+    fontSize: 16
   },
   button: {
     alignSelf: 'center',
     paddingHorizontal: 14,
-    paddingVertical: 8
+    paddingVertical: 8,
+    marginTop: 10
   }
 })
 

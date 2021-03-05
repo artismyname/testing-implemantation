@@ -12,6 +12,7 @@ interface IAuthContext {
 
 type User = {
   username: string
+  number: string
 } | null
 
 const AuthContext = createContext<IAuthContext | null>(null)
@@ -19,13 +20,15 @@ const AuthContext = createContext<IAuthContext | null>(null)
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User>(null)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
-  const [authLoading, setAuthLoading] = useState<boolean>(true)
+  const [authLoading, setAuthLoading] = useState<boolean>(false)
 
   useEffect(() => {
     loadAuthProvider()
   }, [])
 
   const loadAuthProvider = async () => {
+    setAuthLoading(true)
+
     let storedUser = await AsyncStorage.getItem('user')
 
     if (storedUser) {

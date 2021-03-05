@@ -23,11 +23,11 @@ export default function Login({ navigation }: any) {
           keyboardType='numeric'
           style={styles.inputNumber}
           value={phone}
-          placeholder={'Number'}
+          placeholder='Number'
           onChangeText={text => setPhone(MaskService.toMask('cel-phone', text))}
         />
         <DefaultButton title='Submit' style={styles.button} action={() => {
-          login(phone, setLoginLoading, loadAuthProvider)
+          // login(phone, setLoginLoading, loadAuthProvider)
         }} />
       </SafeAreaView>
       {loginLoading && <Loading />}

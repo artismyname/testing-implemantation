@@ -1,20 +1,48 @@
-import React from 'react'
-import { SafeAreaView, Text } from 'react-native'
+import * as React from 'react'
+import {
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native'
 
-import DefaultButton from '../../Components/DefaultButton'
+export default function HomeScreen({ navigation }: any) {
+  const [items] = React.useState(
+    new Array(20).fill(null).map((_, idx) => idx + 1)
+  )
 
-import { useAuth } from '../../provider/auth.provider'
-import { logout } from './action'
-
-import styles from './styles'
-
-export default function Home() {
-  const { user, setAuthLoading, loadAuthProvider } = useAuth()
+  const onOpacityPress = (item: any) => navigation.navigate('Details', item)
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Username: {user?.username}</Text>
-      <DefaultButton title='Logout' style={styles.button} action={() => logout(setAuthLoading, loadAuthProvider)} />
-    </SafeAreaView>
+    <View>
+      <Text style={styles.header}>List of numbers from 1 to 20</Text>
+      <FlatList
+        keyExtractor={(_, idx) => `${idx}`}
+        data={items}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => onOpacityPress(item)}
+            style={styles.row}
+          >
+            <Text>Item number {item}</Text>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  header: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginVertical: 16,
+  },
+  row: {
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderBottomColor: '#DDD',
+    borderBottomWidth: 1,
+  },
+})
